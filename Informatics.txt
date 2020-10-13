@@ -1,0 +1,120 @@
+import java.util.Scanner;
+public class Informatics {
+    public static void main(String[] args) {
+		giveIntroduction();
+    	putGradesForTheCourse();
+    }
+	
+	public static void giveIntroduction() {
+ System.out.println("This program computes a student's grade in a course");
+ System.out.println("The grade has 3 components:");
+ System.out.println("Homework assignments(20%), mid term exam(40%) and final exam(40%).");
+ System.out.println("get the final results of the course)");
+ System.out.println();
+ }
+	
+	//This method gets the percentage of all homework assignments together in 20%
+	public static double computeAssignmentsResultsPercentage(double numberOfAssignments, double sumOfAllAssignments, double highestAssignmentScore){
+		return (sumOfAllAssignments /(highestAssignmentScore * numberOfAssignments)) * 20; // EG. (30 / (30/4)) * 20   
+	}
+	
+	//This method prompt the user to enter number of homeworks done and their results
+	//highest Score for each homemork assighment must be 30 Marks
+	//CALLS computeAssignmentsResultsPercentage() for calculations
+	//OUPTPUT THE FINAL HOMEWORK RESULTS (20%)
+	public static double numberOfAssignmentsMethod(Scanner Console) {
+		Scanner console = new Scanner(System.in);
+		System.out.print("NUMBER OF HOMEWORK ASSIGNMENTS : ");
+		int numberOfAssignments = console.nextInt();
+		double sumOfAllAssignments = 0;
+		//double assignmentCurrentScore = 0;
+		double highestAssignmentScore = 30;
+		
+		for (int i = 1; i <= numberOfAssignments; i++) {
+			System.out.print("Homework Assignment " + i + " results : ");
+			double assignmentCurrentScore = console.nextDouble();
+			
+			if(assignmentCurrentScore < 0 || assignmentCurrentScore > 30) {
+				System.out.println("Incorrect results, results must be betweeen (0 - 30)!!!");
+				System.out.print("Homework Assignment " + i + " results : ");
+				assignmentCurrentScore = console.nextDouble();
+			}
+			sumOfAllAssignments = sumOfAllAssignments + assignmentCurrentScore;
+		}
+		
+		System.out.println("TOTAL HOMEWORK ASSIGNMENTS RESULTS : " + sumOfAllAssignments);
+		System.out.println();
+											
+		//Highest Score of each Homework Assignment = 30 Marks, Final Mark in percentage = 20%  
+		
+		double assignmentsFinalMarksPercentage = 0;
+		if(numberOfAssignments > 0 ){ 
+			assignmentsFinalMarksPercentage = computeAssignmentsResultsPercentage(numberOfAssignments, sumOfAllAssignments, highestAssignmentScore);
+			System.out.println("FINAL HOMEWORK ASSIGNMENTS RESULTS IN PERCENTAGE(20%) : " + assignmentsFinalMarksPercentage + "%");
+		} else {
+			System.out.println("FINAL HOMEWORK ASSIGNMENTS RESULTS IN PERCENTAGE(20%): " + assignmentsFinalMarksPercentage + "%");
+		}
+		return assignmentsFinalMarksPercentage;
+	}
+	
+	//This method adds together the final year results for the INFORMATICS course
+	public static double computeYearResults(double assignmentsFinalResults, double midTermExamResults, double finalTermExamResults){
+		return assignmentsFinalResults + midTermExamResults + finalTermExamResults;
+	}
+
+	//This method gets th final homework assignments results, mid-term exam results and final-year results
+	//Calls computeYearResults() for calculations
+	//Output the final results of the Informatics course
+	public static double getWholeYearMarksPercentage(Scanner console){
+		 console = new Scanner(System.in);
+		double assignmentsFinalResults = numberOfAssignmentsMethod(console);
+		System.out.print("MID TERM EXAM RESULTS IN PERCENTAGE(40%) : ");
+		double midTermExamResults = console.nextDouble();
+		if (midTermExamResults < 0 || midTermExamResults > 40) {
+			System.out.println("Incorrect results, results must be betweeen (0 - 40)!!!");
+			System.out.print("MID TERM EXAM RESULTS IN PERCENTAGE(40%) : ");
+			midTermExamResults = console.nextDouble();
+		}
+		System.out.println();
+		
+		System.out.print("FINAL TERM EXAM RESULTS IN PERCENTAGE(40%) : ");
+		double finalTermExamResults = console.nextDouble();
+		if (finalTermExamResults < 0 || finalTermExamResults > 40) {
+			System.out.println("Incorrect results, results must be betweeen (0 - 40)!!!");
+			System.out.print("FINAL TERM EXAM RESULTS IN PERCENTAGE(40%) : ");
+			finalTermExamResults = console.nextDouble();
+		}
+				
+		double finalYearCourseResults = computeYearResults(assignmentsFinalResults,midTermExamResults, finalTermExamResults);
+		System.out.println();
+		//System.out.println("INFORMATICS : " + finalYearCourseResults + "%");
+		System.out.printf("INFORMATICS OVERALL MARKS :  %.1f%%", finalYearCourseResults);//this format the floating number to 10th, use printf 
+		return finalYearCourseResults;
+	}
+	
+	//This method get the grade according to the results of the course
+	public static void putGradesForTheCourse(){
+		Scanner console = new Scanner(System.in);
+		double finalYearCourseResults = getWholeYearMarksPercentage(console);
+		
+		if(finalYearCourseResults > 80){
+			System.out.println(", A");
+		} else if(finalYearCourseResults >= 70){
+			System.out.println(", B");
+		} else if(finalYearCourseResults >= 60){
+			System.out.println(", C");
+		} else if(finalYearCourseResults >= 50){
+			System.out.println(", E");
+		} else if(finalYearCourseResults >= 40){
+			System.out.println(", F");
+		} else if(finalYearCourseResults >= 30){
+			System.out.println(", G");
+		} else if(finalYearCourseResults >= 20){
+			System.out.println(", H");
+		} else if(finalYearCourseResults >= 0){
+			System.out.println(", H");
+		} else if(finalYearCourseResults > 100) {// greater than 100
+			System.out.print("invalid");
+		}
+	}
+}
